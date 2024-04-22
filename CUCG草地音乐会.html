@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CUCG草地音乐会</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f6fa;
+        }
+ 
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+ 
+        .form {
+            background-color: rgb(212, 229, 243);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+ 
+        .form input {
+            display: block;
+            width: 94%;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+ 
+        .form button {
+            display: block;
+            width: 100%;
+            background-color: rgba(38, 107, 171, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+ 
+        .form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #number{
+            text-align:center;
+            font-size: 50px;
+            color: rgb(47, 46, 46);
+        }
+
+        h1{
+            color: rgb(48, 48, 48);
+            text-align:center;
+        }
+
+        .play{
+            text-align:center;
+            font-size: 20px;
+        }
+
+        h2{
+            text-align:center;
+            color: rgb(48, 48, 48);
+        }
+
+        .jiben{
+            color: rgb(48, 48, 48);
+        }
+
+       #numberDisplay{
+            text-align:center;
+       }
+
+       #programList{
+            text-align:center;
+       }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="pageOne" class="form">
+        <h2>CUCG草地欢唱报名！</h2>
+        <p><label class="jiben" for="name">昵称</label>
+        <input type="text" id="name" placeholder="不要求真实姓名"></p>
+        <p><label class="jiben" for="song">歌曲</label>
+        <input type="text" id="song" placeholder="请输入你想唱的歌曲名"></p>
+        <p><button onclick="goToSecondPage()">确认提交</button></p>
+        <p><button onclick="goToThirdPage()">查看节目单</button></p>
+    </div>
+ 
+    <div id="pageTwo" class="form" style="display:none;">
+        <p class="play">你的演出号码为</p>
+        <p id="numberDisplay"></p>
+        <button onclick="goToFirstPage()">返回首页</button>
+    </div>
+
+    <div id="pageThree" class="form" style="display:none;">
+        <h1>节目单</h1>
+        <div id="programList" class="list-form"></div>
+        <p><button onclick="goToFirstPage()">返回首页</button></p>
+    </div>
+ </div>
+
+  <script>
+    let currentNumber = 0;
+    let programList = [];
+
+    const pageOne = document.getElementById('pageOne');
+    const pageTwo = document.getElementById('pageTwo');
+    const pageThree = document.getElementById('pageThree');
+    const programListContainer = document.getElementById('programList');
+    const numberDisplay = document.getElementById('numberDisplay');
+
+    function goToSecondPage() 
+    {
+      const nameInput = document.getElementById('name');
+      const songInput = document.getElementById('song');
+
+      if (nameInput.value !== '' && songInput.value !== '') 
+      {
+        currentNumber++;
+        if(currentNumber<=100)
+        {
+            alert('提交成功');
+            numberDisplay.innerText = currentNumber;
+            const listItem = document.createElement('div');
+            listItem.className = 'list-item';
+            listItem.innerText = `${currentNumber} ${nameInput.value} ${songInput.value}`;
+            programListContainer.appendChild(listItem); 
+              
+            pageOne.style.display = 'none';
+            pageTwo.style.display = 'block';
+            pageThree.style.display = 'none';        
+        }
+        else
+        {
+            alert("抱歉，此次报名名额已满，期待你的下次参与！");     
+        }
+        nameInput.value = '';
+        songInput.value = '';
+        return false;
+      }
+      else
+      {
+        alert('请先输入');
+        return true;
+      }
+    }
+
+    function goToThirdPage() 
+    {
+      pageOne.style.display = 'none';
+      pageTwo.style.display = 'none';
+      pageThree.style.display = 'block';
+    }
+
+    function goToFirstPage() 
+    {
+      pageOne.style.display = 'block';
+      pageTwo.style.display = 'none';
+      pageThree.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
